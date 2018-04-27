@@ -30,9 +30,12 @@ module BookStore
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # When you run your generators, you get rspec test files
     config.generators do |g|
+      # When you run your generators, you get rspec test files
       g.test_framework :rspec
+
+      # Make ActiveRecord use UUID as the type for id by default
+      g.orm :active_record, primary_key_type: :uuid
     end
   end
 end

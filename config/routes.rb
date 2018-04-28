@@ -7,5 +7,5 @@ Rails.application.routes.draw do
 
   resources :carts, only: :index
 
-  resources :users, only: :show
+  resources :users, only: %i[index show]
 end

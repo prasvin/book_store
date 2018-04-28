@@ -1,6 +1,5 @@
 class User < ApplicationRecord
-  has_many :items
-  has_many :carts, through: :items
+  has_many :carts
   has_many :orders
 
   validates :email, presence: true, uniqueness: true
@@ -9,6 +8,10 @@ class User < ApplicationRecord
 
   def total_orders_and_amount
     { total_orders: orders.count, total_amount: orders.pluck(:amount).sum }
+  end
+
+  def total_purchased_books
+    Item.where(order: orders).sum(:quantity)
   end
 
   def top_purchased_available_books(limit = 5)

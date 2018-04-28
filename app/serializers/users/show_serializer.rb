@@ -1,4 +1,4 @@
-class UserSerializer < ActiveModel::Serializer
+class Users::ShowSerializer < ActiveModel::Serializer
   attributes :id, :first_name, :last_name, :email, :total_orders, :total_amount, :top_5_available_books
 
   def total_orders

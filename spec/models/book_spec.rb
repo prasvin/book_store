@@ -10,6 +10,5 @@ RSpec.describe Book, type: :model do
     should validate_uniqueness_of(:isbn)
   end
 
-  it { is_expected.to validate_presence_of(:available) }
   it { is_expected.to validate_presence_of(:price) }
 end

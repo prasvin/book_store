@@ -12,14 +12,25 @@ ruby = Book.find_or_create_by!(title: 'Ruby', author: 'Matz Aki', isbn: '123-isb
 ember = Book.find_or_create_by!(title: 'Ember', author: 'Yahuda Katz', isbn: '123-isbn-embe', price: 129.99)
 python = Book.find_or_create_by!(title: 'Python', author: 'Jason Sonn', isbn: '123-isbn-pyth', price: 99.99)
 
+# inactive cart
 inactive_cart = Cart.find_or_create_by!(state: 'inactive', user: john)
-active_cart = Cart.find_or_create_by!(state: 'active', user: john)
-
 Item.find_or_create_by!(quantity: 5, book: ruby, cart: inactive_cart)
 Item.find_or_create_by!(quantity: 5, book: ember, cart: inactive_cart)
 Item.find_or_create_by!(quantity: 5, book: python, cart: inactive_cart)
 
-Item.find_or_create_by!(quantity: 2, book: ruby, cart: active_cart)
+# previous ordered cart
+previous_ordered_cart = Cart.find_or_create_by!(state: 'active', user: john)
+Item.find_or_create_by!(quantity: 5, book: python, cart: previous_ordered_cart)
+Item.find_or_create_by!(quantity: 1, book: ruby, cart: previous_ordered_cart)
+Order.create!(cart: previous_ordered_cart, user: john)
+
+# current active cart
+active_cart = Cart.find_or_create_by!(state: 'active', user: john)
+Item.find_or_create_by!(quantity: 3, book: ruby, cart: active_cart)
 Item.find_or_create_by!(quantity: 3, book: ember, cart: active_cart)
 
 Order.create!(cart: active_cart, user: john)
+
+# python becomes unavailable and replaced by more python
+python.update!(available: false)
+more_python = Book.find_or_create_by!(title: 'More Python', author: 'Jason Sonn', isbn: '123-isbn-more', price: 119.99)

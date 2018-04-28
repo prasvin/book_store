@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   resources :books, only: :index do
     get :search, on: :collection
   end
+
   resources :carts, only: :index
+
+  resources :users, only: :show
 end
